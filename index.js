@@ -10,13 +10,60 @@
 */
 
 const express = require('express')
+const { dbConnection, mongoose } = require("./src/configs/dbConnection");
 const app = express()
 
 /* ------------------------------------------------------- */
 
+// env variables
 
+require('dotenv').config()
+const PORT = process.env?.PORT || 8000;
 
-// continue from here...
+// async errors
+require('express-async-errors');
+
+// db connection 
+dbConnection()
+
+//body parser 
+app.use(express.json())
+
+// middlewares
+app.use(require('./src/middlewares/findSearchSortPage'))
+
+//homePath
+app.all('/', (req, res)=> {
+    res.send({
+        error: false,
+        message: 'welcome to personal api',
+        session: req.session,
+        isLogin: req.isLogin
+    })
+})
+
+// routes
+app.use('/departments', require('./src/routes/department.router'))
+
+app.all('*', async( req, res) => {
+    res.status(404).send({
+        error:true,
+        message: 'route not available'
+    })
+})
+
+//cokies xxs cross side searching 
+app.use(
+    require('cookie-session')({
+        secret: process.env.SECRET_KEY || 'wertyu45',
+        // daha guvenli hale getirmek icin yani https deki s gibi
+        // cookie: {
+        //     secure:!(process.env.NODE_ENV == 'development'),
+        //     httpOnly: false,
+        //     maxAge: 24 * 60 * 60
+        // }
+    })
+)
 
 
 

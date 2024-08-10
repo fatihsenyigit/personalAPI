@@ -2,21 +2,13 @@
 /* -------------------------------------------------------
     EXPRESS - Personnel API
 ------------------------------------------------------- */
-// app.use(findSearchSortPage):
+// app.use(findSearchSortPage): 
 
 module.exports = (req, res, next) => {
-  // Searching & Sorting & Pagination:
 
-  // SEARCHING: URL?search[key1]=value1&search[key2]=value2
   const search = req.query?.search || {};
   for (let key in search) search[key] = { $regex: search[key], $options: "i" };
-
-  // Cancelled -> SORTING: URL?sort[key1]=1&sort[key2]=-1 (1:ASC, -1:DESC)
-  // mongoose=^8.0 -> SORTING: URL?sort[key1]=asc&sort[key2]=desc (asc: A->Z - desc: Z->A)
   const sort = req.query?.sort || {};
-
-  // PAGINATION: URL?page=1&limit=10
-  // LIMIT:
   let limit = Number(req.query?.limit);
   limit = limit > 0 ? limit : Number(process.env?.PAGE_SIZE || 20);
   // PAGE:
