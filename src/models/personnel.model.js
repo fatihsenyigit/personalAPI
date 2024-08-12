@@ -26,7 +26,7 @@ const PersonnelSchema = new mongoose.Schema(
       type: String,
       trim: true,
       required: true,
-      set: (password) => passwordEncrypt(password),
+      // set: (password) => passwordEncrypt(password),
     },
 
     firstName: {
@@ -45,6 +45,8 @@ const PersonnelSchema = new mongoose.Schema(
       type: String,
       trim: true,
       required: true,
+      //minlength: 10,
+      // march: /^[0-9]+$/
     },
 
     email: {
@@ -98,24 +100,36 @@ const PersonnelSchema = new mongoose.Schema(
   { collection: "personnels", timestamps: true },
 );
 
-// PersonnelSchema.set("toJSON", {
-//   transform: (doc, ret) => {
-//     ret.id = ret._id;
-//     delete ret._id;
-//     delete ret.__v;
-//     delete ret.password;
-//     ret.createdAt = ret?.createdAt.toLocaleDateString("tr-tr");
-//   },
-// });
 
-// function capitalize(str) {
-//   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-// }
 
-// PersonnelSchema.virtual("fullname").get(function () {
-//   return `${this.firstname} ${this.lastname}`;
-//   // return `${capitalize(this.firstname)} ${capitalize(this.lastname)}`;
-// });
+
+/* 
+
+mangoozun bir methodu. kullaniciya json formatindan bir veri gonderirken
+gereksiz olanlari siler. ama data base den silmez. gonderilecek olanlardan siler
+
+
+PersonnelSchema.set("toJSON", {
+  transform: (doc, ret) => {
+    ret.id = ret._id;
+    delete ret._id;
+    delete ret.__v;
+    delete ret.password;
+    ret.createdAt = ret?.createdAt.toLocaleDateString("tr-tr");
+  },
+});
+
+alttaki nin amaci ismin ve soyismin bas harflerini buyuk yap
+sonra birlestir demek
+
+function capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+}
+
+PersonnelSchema.virtual("fullname").get(function () {
+  return `${this.firstname} ${this.lastname}`;
+  // return `${capitalize(this.firstname)} ${capitalize(this.lastname)}`;
+}); */
 
 module.exports = mongoose.model("Personnel", PersonnelSchema);
 
