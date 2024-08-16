@@ -35,7 +35,7 @@ module.exports = async (req, res, next) => {
         if (tokenData) req.user = tokenData.userId
     }
 
-    console.log(req.user)
+
 
     next()
 

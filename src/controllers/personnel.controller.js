@@ -82,41 +82,42 @@ module.exports = {
 
   // LOGIN & LOGOUT
 
-  login: async (req, res) => {
-    const { username, password } = req.body;
+  // login: async (req, res) => {
+  //   const { username, password } = req.body;
 
-    if (username && password) {
-      const user = await Personnel.findOne({ username, password });
-      if (user && user.isActive) {
-        // Set Session:
-        req.session = {
-          id: user._id,
-          password: user.password,
-        };
-        // Set Cookie:
-        if (req.body?.rememberMe) {
-          req.sessionOptions.maxAge = 1000 * 60 * 60 * 24 * 3; // 3 Days
-        }
+  //   if (username && password) {
+  //     const user = await Personnel.findOne({ username, password });
+  //     if (user && user.isActive) {
+  //       // Set Session:
+  //       req.session = {
+  //         id: user._id,
+  //         password: user.password,
+  //       };
+  //       // Set Cookie:
+  //       if (req.body?.rememberMe) {
+  //         req.sessionOptions.maxAge = 1000 * 60 * 60 * 24 * 3; // 3 Days
+  //       }
 
-        res.status(200).send({
-          error: false,
-          user,
-        });
-      } else {
-        res.errorStatusCode = 401;
-        throw new Error("Wrong Username or Password.");
-      }
-    } else {
-      res.errorStatusCode = 401;
-      throw new Error("Please entry username and password.");
-    }
-  },
-  logout: async () => {
-    req.session = null
-    res.send({
-      error: false,
-      maessage:"Logout is completed"
-    })
-  }
+  //       res.status(200).send({
+  //         error: false,
+  //         user,
+  //       });
+  //     } else {
+  //       res.errorStatusCode = 401;
+  //       throw new Error("Wrong Username or Password.");
+  //     }
+  //   } else {
+  //     res.errorStatusCode = 401;
+  //     throw new Error("Please entry username and password.");
+  //   }
+  // },
+  // logout: async () => {
+  //   req.session = null
+  //   res.send({
+  //     error: false,
+  //     maessage:"Logout is completed"
+  //   })
+  // }
 };
+
 

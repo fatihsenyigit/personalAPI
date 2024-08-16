@@ -10,7 +10,6 @@ module.exports = {
 
     if (username && password) {
       const user = await Personnel.findOne({ username });
-      console.log(user);
       if (user && user.password == passwordEncrypt(password)) {
         if(user.isActive) {
             // token varmi
