@@ -2,8 +2,7 @@
 
 "use strict";
 
-const router = require("express").Router();
-const {Token} = require('../models/token.model')
+const Token = require('../models/token.model')
 
 module.exports = {
   list: async (req, res) => {
@@ -53,6 +52,3 @@ module.exports = {
   },
 };
 
-
-
-module.exports = router;

@@ -30,21 +30,24 @@ app.use(express.json());
 
 // middlewares
 app.use(require("./src/middlewares/findSearchSortPage"));
+app.use(require("./src/middlewares/authentication"));
 
 //homePath
 app.all("/", (req, res) => {
   res.send({
     error: false,
     message: "welcome to personal api",
-    session: req.session,
-    isLogin: req.isLogin,
+    user: req.user
+    // session: req.session,
+    // isLogin: req.isLogin,
   });
 });
 
 // routes
 app.use("/departments", require("./src/routes/department.router"));
 app.use("/personels", require("./src/routes/personnel.router"));
-app.use('/auth', require('./src/routes/auth.router'))
+app.use('/auth', require('./src/routes/auth.router'));
+app.use("/tokens", require("./src/routes/token.router"));
 
 app.all("*", async (req, res) => {
   res.status(404).send({
@@ -70,6 +73,8 @@ app.use(
 
 // errorHandler:
 app.use(require("./src/middlewares/errorHandler"));
+
+
 
 // RUN SERVER:
 app.listen(PORT, () => console.log("http://127.0.0.1:" + PORT));

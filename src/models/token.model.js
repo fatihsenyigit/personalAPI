@@ -26,4 +26,9 @@ const TokenSchema = new mongoose.Schema(
 );
 
 
-module.exports.Token = mongoose.model('Token', TokenSchema)
+module.exports = mongoose.model('Token', TokenSchema)
+
+/* {
+  "userId": "66bb4a7e70dc0f2514c77106",
+  "token": "wertyu66"
+} */
