@@ -29,8 +29,31 @@ dbConnection();
 app.use(express.json());
 
 // middlewares
+
+/* ------------------------------------------------------- *
+
+// loglari tutmak icin
+const morgan = require('morgan')
+const fs = require('node:fs')
+// app.use(morgan('tiny'))
+// app.use(morgan('Method=":method" - IP=":remote-addr" :remote-addr'))
+
+// day by day
+const now = new Date()
+const today = now.toISOString().split('T')[0]
+app.use(morgan('combined', {
+  stream: fs.createWriteStream(`./logs/${today}.log`, {flags:'a+'})
+}))
+
+/* ------------------------------------------------------- */
+
+app.use(require('./src/middlewares/logger'))
+
 app.use(require("./src/middlewares/findSearchSortPage"));
 app.use(require("./src/middlewares/authentication"));
+
+
+
 
 //homePath
 app.all("/", (req, res) => {
@@ -55,6 +78,8 @@ app.all("*", async (req, res) => {
     message: "route not available",
   });
 });
+
+
 
 //cokies xxs cross side searching
 app.use(
