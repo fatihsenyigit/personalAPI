@@ -47,6 +47,24 @@ app.use(morgan('combined', {
 
 /* ------------------------------------------------------- */
 
+
+//json un swagger da goruntuleme
+const swaggerUi = require('swagger-ui-express')
+const swaggerJson = require('./swagger.json')
+app.use('/documents/swagger', swaggerUi.serve, swaggerUi.setup(swaggerJson, {
+  swaggerOptions: {persistAuthorization: true}
+}))
+
+// json u normal crome da goruntuleme
+app.use('/documents/json', (req,res) => {
+  res.sendFile('swagger.json', {root:'.'})
+})
+
+//json u redoc da goruntuleme
+const redoc = require('redoc-express')
+app.use('/documents/redoc', redoc({specUrl: '/documents/json', title:'redoc UI'}))
+
+
 app.use(require('./src/middlewares/logger'))
 
 app.use(require("./src/middlewares/findSearchSortPage"));
